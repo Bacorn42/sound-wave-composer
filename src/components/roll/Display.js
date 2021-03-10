@@ -1,10 +1,14 @@
 import React, { useRef, useEffect } from 'react';
+import Note from '../../Note.js';
 import { toneNames } from '../../tones.js';
+import { PX_TO_TONE } from '../../constants.js';
 
-const HEIGHT = 12 * 20;
-const WIDTH = 20 * 20;
+const TONES = 12;
+const WIDTH_UNITS = 20;
+const HEIGHT = TONES * PX_TO_TONE;
+const WIDTH = WIDTH_UNITS * 20;
 
-function Display({ rects }) {
+function Display({ notes }) {
   const canvas = useRef(null);
 
   const draw = () => {
@@ -12,33 +16,33 @@ function Display({ rects }) {
     ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
     ctx.font = '16px sans-serif';
     ctx.strokeStyle = '#666';
-    for(let i = 0; i < 11; i++) {
+    for(let i = 1; i < TONES; i++) {
       ctx.beginPath();
-      ctx.moveTo(0, (HEIGHT/12) * (i + 1));
-      ctx.lineTo(WIDTH, (HEIGHT/12) * (i + 1));
+      ctx.moveTo(0, PX_TO_TONE * i);
+      ctx.lineTo(WIDTH, PX_TO_TONE * i);
       ctx.stroke();
     }
-    for(let i = 0; i < 19; i++) {
+    for(let i = 1; i < WIDTH_UNITS; i++) {
       ctx.beginPath();
-      ctx.moveTo((WIDTH/20) * (i + 1), 0);
-      ctx.lineTo((WIDTH/20) * (i + 1), HEIGHT);
+      ctx.moveTo(WIDTH_UNITS * i, 0);
+      ctx.lineTo(WIDTH_UNITS * i, HEIGHT);
       ctx.stroke();
     }
     ctx.fillStyle = '#ccc';
-    for(const rect of rects) {
-      ctx.fillRect(rect.x + 2, rect.y + 2, 20 * 4 - 4, 20 - 4);
+    for(const note of notes) {
+      ctx.fillRect(note.x + 2, note.y + 2, note.width - 4, note.height - 4);
     }
     ctx.fillStyle = '#000';
-    for(let i = 0; i < 12; i++) {
-      ctx.fillText(toneNames[i], 0, (HEIGHT/12) * (i + 1) - 4);
+    for(let i = 0; i < TONES; i++) {
+      ctx.fillText(toneNames[i], 0, PX_TO_TONE * (i + 1) - 4);
     }
   }
 
   const clickHandler = (e) => {
     const coords = getMouseCoords(e);
-    const snapX = Math.floor((coords.x)/20) * 20;
-    const snapY = Math.floor((coords.y)/20) * 20;
-    rects.push({x: snapX, y: snapY});
+    const snapX = Math.floor((coords.x)/WIDTH_UNITS) * WIDTH_UNITS;
+    const snapY = Math.floor((coords.y)/WIDTH_UNITS) * WIDTH_UNITS;
+    notes.push(new Note(snapX, snapY));
     draw();
   }
 
@@ -53,7 +57,7 @@ function Display({ rects }) {
   }
 
   const clear = () => {
-    rects.splice(0, rects.length);
+    notes.splice(0, notes.length);
     draw();
   }
 

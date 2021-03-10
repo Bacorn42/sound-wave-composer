@@ -3,12 +3,12 @@ import Display from './Display.js';
 import Generator from './Generator.js';
 
 function Roll() {
-  const rects = [];
+  const notes = [];
 
   return (
     <div>
-      <Display rects={rects}></Display>
-      <Generator rects={rects}></Generator>
+      <Display notes={notes}></Display>
+      <Generator notes={notes}></Generator>
     </div>
   );
 }

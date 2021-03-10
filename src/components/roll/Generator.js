@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { getTone } from '../../waves/sine/tones.js';
-import { toneArray } from '../../tones.js';
 import getWAV from '../../wav/WAVWriter.js';
 import { SAMPLES, SIZE, VOLUME } from '../../constants.js';
 
-function Generator({ rects }) {
+function Generator({ notes }) {
   let [waveData, setWaveData] = useState(null);
   const clickHandler = () => {
     const arr = new Array(SIZE).fill(0);
-    for(const rect of rects) {
-      const index = rect.y / 20;
-      const offset = (rect.x / 20) * (1/4);
-      const wave = getTone(toneArray[index], 1);
-      console.log(SAMPLES * 2 * offset, wave.length);
+    for(const note of notes) {
+      const offset = note.getOffset();
+      const wave = getTone(note.getTone(), 1);
       for(let i = 0; i < wave.length; i++) {
         const arrIndex = SAMPLES * 2 * offset + i;
         arr[arrIndex] += wave[i];
