@@ -4,18 +4,20 @@ import DisplaySettings from './DisplaySettings.js';
 import NoteSettings from './NoteSettings.js';
 import Note from '../../Note.js';
 import { toneNames } from '../../tones.js';
-import { PX_TO_TONE } from '../../constants.js';
+import { PX_TO_BEAT, PX_TO_TONE } from '../../constants.js';
 
 const TONES = 12;
 const WIDTH_UNITS = 20;
 const HEIGHT = TONES * PX_TO_TONE;
 const WIDTH = WIDTH_UNITS * 20;
+const BEATS = 5;
 
-function Display({ notes }) {
+function Display({ notes, setNotes, tempo, setTempo }) {
   const canvas = useRef(null);
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [ctrlDown, setCtrlDown] = useState(false);
   const [newNoteLength, setNewNoteLength] = useState(1);
+  const [beatDivision, setBeatDivision] = useState(4);
 
   const draw = () => {
     const ctx = canvas.current.getContext('2d');
@@ -29,10 +31,10 @@ function Display({ notes }) {
       ctx.lineTo(WIDTH, PX_TO_TONE * i +0.5);
       ctx.stroke();
     }
-    for(let i = 1; i < WIDTH_UNITS; i++) {
+    for(let i = 1; i < BEATS * beatDivision; i++) {
       ctx.beginPath();
-      ctx.moveTo(WIDTH_UNITS * i + 0.5, 0);
-      ctx.lineTo(WIDTH_UNITS * i + 0.5, HEIGHT);
+      ctx.moveTo(PX_TO_BEAT/beatDivision * i + 0.5, 0);
+      ctx.lineTo(PX_TO_BEAT/beatDivision * i + 0.5, HEIGHT);
       ctx.stroke();
     }
     ctx.fillStyle = '#ccc';
@@ -62,9 +64,9 @@ function Display({ notes }) {
         return;
       }
     }
-    const snapX = Math.floor((coords.x)/WIDTH_UNITS) * WIDTH_UNITS;
+    const snapX = Math.floor((coords.x)/(PX_TO_BEAT/beatDivision)) * (PX_TO_BEAT/beatDivision);
     const snapY = Math.floor((coords.y)/WIDTH_UNITS) * WIDTH_UNITS;
-    notes.push(new Note(snapX, snapY, newNoteLength));
+    setNotes([...notes, new Note(snapX, snapY, newNoteLength)])
     setSelectedNotes([]);
     draw();
   }
@@ -92,29 +94,34 @@ function Display({ notes }) {
   }
 
   const clear = () => {
-    notes.splice(0, notes.length);
+    setNotes([]);
     setSelectedNotes([]);
     draw();
   }
 
   const deleteNotes = () => {
-    for(let i = notes.length - 1; i >= 0; i--) {
-      if(selectedNotes.includes(notes[i])) {
-        notes.splice(i, 1);
-      }
-    }
-    setSelectedNotes([...notes]);
+    setNotes(notes.filter(note => selectedNotes.includes(note)));
+    setSelectedNotes([]);
   }
 
   const newNoteLengthHandler = (val) => {
     setNewNoteLength(val);
   }
 
+  const beatDivisionHandler = (val) => {
+    setBeatDivision(val);
+  }
+
+  const tempoHandler = (val) => {
+    setTempo(val);
+  }
+
   useEffect(() => draw());
 
   return (
     <div className="display">
-      <DisplaySettings setNewNoteLength={newNoteLengthHandler}></DisplaySettings>
+      <DisplaySettings setNewNoteLength={newNoteLengthHandler} setBeatDivision={beatDivisionHandler}
+                       setTempo={tempoHandler}></DisplaySettings>
       <div className="display-canvas">
         <canvas ref={canvas} width={WIDTH} height={HEIGHT} tabIndex="0"
                 onClick={clickHandler} onKeyDown={keyDownHandler} onKeyUp={keyUpHandler}></canvas>

@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import './Generator.css';
 import { getTone } from '../../waves/sine/tones.js';
 import getWAV from '../../wav/WAVWriter.js';
-import { SAMPLES, SIZE, VOLUME } from '../../constants.js';
+import { SAMPLES, VOLUME } from '../../constants.js';
 
-function Generator({ notes }) {
+function Generator({ notes, tempo }) {
   let [waveData, setWaveData] = useState(null);
   const clickHandler = () => {
+    const LENGTH = 5 / (tempo/60);
+    const SIZE = SAMPLES * 4 * LENGTH;
     setWaveData(0);
     setTimeout(() => {
       const arr = new Array(SIZE).fill(0);
       for(const note of notes) {
-        const offset = note.getOffset();
-        const wave = getTone(note.getTone(), note.getLength());
-        console.log(note.getTone());
+        const offset = note.getOffset() / (tempo/60);
+        const wave = getTone(note.getTone(), note.getLength() / (tempo/60));
         for(let i = 0; i < wave.length; i++) {
-          const arrIndex = SAMPLES * 2 * offset + i;
+          const arrIndex = Math.floor(SAMPLES * 2 * offset) + i;
           arr[arrIndex] += wave[i];
         }
       }
       const normalizedArr = normalize(arr);
-      console.log(normalizedArr);
-      setWaveData(getWAV(normalizedArr));
+      setWaveData(getWAV(normalizedArr, SIZE));
     }, 0);
   }
 

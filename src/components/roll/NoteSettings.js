@@ -31,7 +31,7 @@ function NoteSettings({ notes, draw, deleteNotes }) {
   return (
     <div className="note-settings">
       Tuning offset <input value={tuningOffset} onChange={handleTuningOffset}></input> cents.<br />
-      Length <input value={length} onChange={handleLength}></input>s.<br />
+      Length <input value={length} onChange={handleLength}></input>beats.<br />
       <button onClick={deleteNotes}>Delete</button>
     </div>
   );

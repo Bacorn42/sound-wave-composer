@@ -1,4 +1,4 @@
-import { SAMPLES, SIZE } from '../constants.js';
+import { SAMPLES } from '../constants.js';
 
 function numberToBytes(num, numberOfBytes) {
   const bytes = new Array(numberOfBytes).fill(0);
@@ -32,9 +32,9 @@ function pushWaveData(arr, waveData) {
   }
 }
 
-function pushHeaders(arr) {
+function pushHeaders(arr, size) {
   pushBigEndian(arr, stringToBytes("RIFF"));
-  pushLittleEndian(arr, numberToBytes(36 + SIZE, 4));
+  pushLittleEndian(arr, numberToBytes(36 + size, 4));
   pushBigEndian(arr, stringToBytes("WAVE"));
   pushBigEndian(arr, stringToBytes("fmt "));
   pushLittleEndian(arr, numberToBytes(16, 4));
@@ -45,13 +45,13 @@ function pushHeaders(arr) {
   pushLittleEndian(arr, numberToBytes(4, 2));
   pushLittleEndian(arr, numberToBytes(16, 2));
   pushBigEndian(arr, stringToBytes("data"));
-  pushLittleEndian(arr, numberToBytes(SIZE, 4));
+  pushLittleEndian(arr, numberToBytes(size, 4));
 }
 
-function getWAV(waveData) {
+function getWAV(waveData, size) {
   const arr = [];
 
-  pushHeaders(arr);
+  pushHeaders(arr, size);
   pushWaveData(arr, waveData);
     
   const byteArray = new Uint8Array(arr);

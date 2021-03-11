@@ -1,11 +1,11 @@
-import { PX_TO_S, PX_TO_TONE } from './constants.js';
+import { PX_TO_BEAT, PX_TO_TONE } from './constants.js';
 import { toneArray } from './tones.js';
 
 class Note {
   constructor(x, y, length) {
     this.x = x;
     this.y = y;
-    this.width = PX_TO_S * length;
+    this.width = PX_TO_BEAT * length;
     this.height = PX_TO_TONE;
     this.tuningOffset = 0;
     this.length = length;
@@ -20,7 +20,7 @@ class Note {
   }
 
   getOffset() {
-    return this.x / PX_TO_S;
+    return this.x / PX_TO_BEAT;
   }
 
   getTone() {
@@ -33,7 +33,7 @@ class Note {
 
   setLength(length) {
     this.length = length;
-    this.width = PX_TO_S * length;
+    this.width = PX_TO_BEAT * length;
   }
 
   setTuningOffset(offset) {
