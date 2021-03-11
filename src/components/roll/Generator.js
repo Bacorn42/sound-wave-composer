@@ -10,6 +10,7 @@ function Generator({ notes }) {
     for(const note of notes) {
       const offset = note.getOffset();
       const wave = getTone(note.getTone(), 1);
+      console.log(note.getTone());
       for(let i = 0; i < wave.length; i++) {
         const arrIndex = SAMPLES * 2 * offset + i;
         arr[arrIndex] += wave[i];
