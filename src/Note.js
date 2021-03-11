@@ -2,13 +2,13 @@ import { PX_TO_S, PX_TO_TONE } from './constants.js';
 import { toneArray } from './tones.js';
 
 class Note {
-  constructor(x, y) {
+  constructor(x, y, length) {
     this.x = x;
     this.y = y;
-    this.width = PX_TO_S;
+    this.width = PX_TO_S * length;
     this.height = PX_TO_TONE;
     this.tuningOffset = 0;
-    this.length = 1;
+    this.length = length;
   }
 
   getX() {

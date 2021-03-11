@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Display.css';
+import DisplaySettings from './DisplaySettings.js';
 import NoteSettings from './NoteSettings.js';
 import Note from '../../Note.js';
 import { toneNames } from '../../tones.js';
@@ -14,6 +15,7 @@ function Display({ notes }) {
   const canvas = useRef(null);
   const [selectedNotes, setSelectedNotes] = useState([]);
   const [ctrlDown, setCtrlDown] = useState(false);
+  const [newNoteLength, setNewNoteLength] = useState(1);
 
   const draw = () => {
     const ctx = canvas.current.getContext('2d');
@@ -62,7 +64,7 @@ function Display({ notes }) {
     }
     const snapX = Math.floor((coords.x)/WIDTH_UNITS) * WIDTH_UNITS;
     const snapY = Math.floor((coords.y)/WIDTH_UNITS) * WIDTH_UNITS;
-    notes.push(new Note(snapX, snapY));
+    notes.push(new Note(snapX, snapY, newNoteLength));
     setSelectedNotes([]);
     draw();
   }
@@ -104,10 +106,15 @@ function Display({ notes }) {
     setSelectedNotes([...notes]);
   }
 
+  const newNoteLengthHandler = (val) => {
+    setNewNoteLength(val);
+  }
+
   useEffect(() => draw());
 
   return (
     <div className="display">
+      <DisplaySettings setNewNoteLength={newNoteLengthHandler}></DisplaySettings>
       <div className="display-canvas">
         <canvas ref={canvas} width={WIDTH} height={HEIGHT} tabIndex="0"
                 onClick={clickHandler} onKeyDown={keyDownHandler} onKeyUp={keyUpHandler}></canvas>
