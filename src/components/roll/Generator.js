@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Generator.css';
 import { getTone } from '../../waves/sine/tones.js';
 import getWAV from '../../wav/WAVWriter.js';
 import { SAMPLES, SIZE, VOLUME } from '../../constants.js';
@@ -6,19 +7,22 @@ import { SAMPLES, SIZE, VOLUME } from '../../constants.js';
 function Generator({ notes }) {
   let [waveData, setWaveData] = useState(null);
   const clickHandler = () => {
-    const arr = new Array(SIZE).fill(0);
-    for(const note of notes) {
-      const offset = note.getOffset();
-      const wave = getTone(note.getTone(), note.getLength());
-      console.log(note.getTone());
-      for(let i = 0; i < wave.length; i++) {
-        const arrIndex = SAMPLES * 2 * offset + i;
-        arr[arrIndex] += wave[i];
+    setWaveData(0);
+    setTimeout(() => {
+      const arr = new Array(SIZE).fill(0);
+      for(const note of notes) {
+        const offset = note.getOffset();
+        const wave = getTone(note.getTone(), note.getLength());
+        console.log(note.getTone());
+        for(let i = 0; i < wave.length; i++) {
+          const arrIndex = SAMPLES * 2 * offset + i;
+          arr[arrIndex] += wave[i];
+        }
       }
-    }
-    const normalizedArr = normalize(arr);
-    console.log(normalizedArr);
-    setWaveData(getWAV(normalizedArr));
+      const normalizedArr = normalize(arr);
+      console.log(normalizedArr);
+      setWaveData(getWAV(normalizedArr));
+    }, 0);
   }
 
   const normalize = (arr) => {
@@ -33,10 +37,13 @@ function Generator({ notes }) {
     if(waveData) {
       return <audio src={waveData} controls></audio>;
     }
+    if(waveData === 0) {
+      return <div>Generating...</div>
+    }
   }
 
   return (
-    <div>
+    <div className="generator">
       <button onClick={clickHandler}>Generate!</button>
       {getAudio()}
     </div>

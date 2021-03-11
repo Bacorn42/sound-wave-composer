@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import './Display.css';
 import NoteSettings from './NoteSettings.js';
 import Note from '../../Note.js';
 import { toneNames } from '../../tones.js';
@@ -85,9 +86,11 @@ function Display({ notes }) {
   useEffect(() => draw());
 
   return (
-    <div>
-      <canvas ref={canvas} width={WIDTH} height={HEIGHT} onClick={clickHandler}></canvas>
-      <button onClick={clear}>Clear</button>
+    <div className="display">
+      <div className="display-canvas">
+        <canvas ref={canvas} width={WIDTH} height={HEIGHT} onClick={clickHandler}></canvas>
+        <button onClick={clear}>Clear</button>
+      </div>
       {selectedNote && <NoteSettings note={selectedNote} draw={draw} deleteNote={deleteNote}></NoteSettings>}
     </div>
   );

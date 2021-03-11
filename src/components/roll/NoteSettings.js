@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './NoteSettings.css';
 
 function NoteSettings({ note, draw, deleteNote }) {
   const [tuningOffset, setTuningOffset] = useState(note.tuningOffset);
@@ -24,10 +25,10 @@ function NoteSettings({ note, draw, deleteNote }) {
   }
 
   return (
-    <div>
+    <div className="note-settings">
       Tuning offset <input value={tuningOffset} onChange={handleTuningOffset}></input> cents.<br />
-      <button onClick={deleteNote}>Delete</button><br />
-      Length <input value={length} onChange={handleLength}></input>s.
+      Length <input value={length} onChange={handleLength}></input>s.<br />
+      <button onClick={deleteNote}>Delete</button>
     </div>
   );
 }
