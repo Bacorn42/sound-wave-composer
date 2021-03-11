@@ -12,4 +12,4 @@ export const G5 = A4 * (2**(10/12));
 export const GS5 = A4 * (2**(11/12));
 
 export const toneArray = [A4, AS4, B4, C5, CS5, D5, DS5, E5, F5, FS5, G5, GS5].reverse();
-export const toneNames = ['A4', 'AS4', 'B4', 'C5', 'CS5', 'D5', 'DS5', 'E5', 'F5', 'FS5', 'G5', 'GS5'].reverse();
+export const toneNames = ['A4', 'A♯4', 'B4', 'C5', 'C♯5', 'D5', 'D♯5', 'E5', 'F5', 'F♯5', 'G5', 'G♯5'].reverse();

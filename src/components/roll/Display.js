@@ -76,13 +76,19 @@ function Display({ notes }) {
     draw();
   }
 
+  const deleteNote = () => {
+    const index = notes.findIndex(note => note === selectedNote);
+    notes.splice(index, 1);
+    setSelectedNote(null);
+  }
+
   useEffect(() => draw());
 
   return (
     <div>
       <canvas ref={canvas} width={WIDTH} height={HEIGHT} onClick={clickHandler}></canvas>
       <button onClick={clear}>Clear</button>
-      {selectedNote && <NoteSettings note={selectedNote} draw={draw}></NoteSettings>}
+      {selectedNote && <NoteSettings note={selectedNote} draw={draw} deleteNote={deleteNote}></NoteSettings>}
     </div>
   );
 }

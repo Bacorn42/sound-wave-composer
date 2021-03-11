@@ -8,6 +8,7 @@ class Note {
     this.width = PX_TO_S;
     this.height = PX_TO_TONE;
     this.tuningOffset = 0;
+    this.length = 1;
   }
 
   getX() {
@@ -24,6 +25,15 @@ class Note {
 
   getTone() {
     return toneArray[this.y / PX_TO_TONE] * (2**(this.tuningOffset/1200));
+  }
+
+  getLength() {
+    return this.length;
+  }
+
+  setLength(length) {
+    this.length = length;
+    this.width = PX_TO_S * length;
   }
 
   setTuningOffset(offset) {
