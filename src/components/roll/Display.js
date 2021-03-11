@@ -12,7 +12,8 @@ const WIDTH = WIDTH_UNITS * 20;
 
 function Display({ notes }) {
   const canvas = useRef(null);
-  const [selectedNote, setSelectedNote] = useState(null);
+  const [selectedNotes, setSelectedNotes] = useState([]);
+  const [ctrlDown, setCtrlDown] = useState(false);
 
   const draw = () => {
     const ctx = canvas.current.getContext('2d');
@@ -35,7 +36,7 @@ function Display({ notes }) {
     ctx.fillStyle = '#ccc';
     for(const note of notes) {
       ctx.fillRect(note.getX() + 2, note.getY() + 2, note.width - 3, note.height - 3);
-      ctx.strokeStyle = (note === selectedNote) ? '#900' : '#666';
+      ctx.strokeStyle = (selectedNotes.includes(note)) ? '#900' : '#666';
       ctx.lineWidth = 2;
       ctx.strokeRect(note.getX() + 2.5, note.getY() + 2.5, note.width - 4, note.height - 4);
     }
@@ -49,7 +50,12 @@ function Display({ notes }) {
     const coords = getMouseCoords(e);
     for(const note of notes) {
       if(note.inRect(coords.x, coords.y)) {
-        setSelectedNote(note);
+        if(ctrlDown) {
+          setSelectedNotes(selectedNotes => [...selectedNotes, note]);
+        }
+        else {
+          setSelectedNotes([note]);
+        }
         draw();
         return;
       }
@@ -57,7 +63,7 @@ function Display({ notes }) {
     const snapX = Math.floor((coords.x)/WIDTH_UNITS) * WIDTH_UNITS;
     const snapY = Math.floor((coords.y)/WIDTH_UNITS) * WIDTH_UNITS;
     notes.push(new Note(snapX, snapY));
-    setSelectedNote(null);
+    setSelectedNotes([]);
     draw();
   }
 
@@ -71,16 +77,31 @@ function Display({ notes }) {
     };
   }
 
+  const keyDownHandler = (e) => {
+    if(e.key === "Control") {
+      setCtrlDown(true);
+    }
+  }
+
+  const keyUpHandler = (e) => {
+    if(e.key === "Control") {
+      setCtrlDown(false);
+    }
+  }
+
   const clear = () => {
     notes.splice(0, notes.length);
-    setSelectedNote(null);
+    setSelectedNotes([]);
     draw();
   }
 
-  const deleteNote = () => {
-    const index = notes.findIndex(note => note === selectedNote);
-    notes.splice(index, 1);
-    setSelectedNote(null);
+  const deleteNotes = () => {
+    for(let i = notes.length - 1; i >= 0; i--) {
+      if(selectedNotes.includes(notes[i])) {
+        notes.splice(i, 1);
+      }
+    }
+    setSelectedNotes([...notes]);
   }
 
   useEffect(() => draw());
@@ -88,10 +109,11 @@ function Display({ notes }) {
   return (
     <div className="display">
       <div className="display-canvas">
-        <canvas ref={canvas} width={WIDTH} height={HEIGHT} onClick={clickHandler}></canvas>
+        <canvas ref={canvas} width={WIDTH} height={HEIGHT} tabIndex="0"
+                onClick={clickHandler} onKeyDown={keyDownHandler} onKeyUp={keyUpHandler}></canvas>
         <button onClick={clear}>Clear</button>
       </div>
-      {selectedNote && <NoteSettings note={selectedNote} draw={draw} deleteNote={deleteNote}></NoteSettings>}
+      {(selectedNotes.length > 0) && <NoteSettings notes={selectedNotes} draw={draw} deleteNotes={deleteNotes}></NoteSettings>}
     </div>
   );
 }
