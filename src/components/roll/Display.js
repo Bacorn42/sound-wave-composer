@@ -3,6 +3,7 @@ import './Display.css';
 import DisplaySettings from './DisplaySettings.js';
 import NoteSettings from './NoteSettings.js';
 import Note from '../../Note.js';
+import noteColors from '../../noteColors.js';
 import { toneNames } from '../../tones.js';
 import { PX_TO_BEAT, PX_TO_TONE } from '../../constants.js';
 
@@ -18,6 +19,7 @@ function Display({ notes, setNotes, tempo, setTempo }) {
   const [ctrlDown, setCtrlDown] = useState(false);
   const [newNoteLength, setNewNoteLength] = useState(1);
   const [beatDivision, setBeatDivision] = useState(4);
+  const [waveFunction, setWaveFunction] = useState('sine');
 
   const draw = () => {
     const ctx = canvas.current.getContext('2d');
@@ -37,8 +39,8 @@ function Display({ notes, setNotes, tempo, setTempo }) {
       ctx.lineTo(PX_TO_BEAT/beatDivision * i + 0.5, HEIGHT);
       ctx.stroke();
     }
-    ctx.fillStyle = '#ccc';
     for(const note of notes) {
+      ctx.fillStyle = noteColors[note.func];
       ctx.fillRect(note.getX() + 2, note.getY() + 2, note.width - 3, note.height - 3);
       ctx.strokeStyle = (selectedNotes.includes(note)) ? '#900' : '#666';
       ctx.lineWidth = 2;
@@ -66,7 +68,7 @@ function Display({ notes, setNotes, tempo, setTempo }) {
     }
     const snapX = Math.floor((coords.x)/(PX_TO_BEAT/beatDivision)) * (PX_TO_BEAT/beatDivision);
     const snapY = Math.floor((coords.y)/WIDTH_UNITS) * WIDTH_UNITS;
-    setNotes([...notes, new Note(snapX, snapY, newNoteLength)])
+    setNotes([...notes, new Note(snapX, snapY, newNoteLength, waveFunction)])
     setSelectedNotes([]);
     draw();
   }
@@ -100,7 +102,7 @@ function Display({ notes, setNotes, tempo, setTempo }) {
   }
 
   const deleteNotes = () => {
-    setNotes(notes.filter(note => selectedNotes.includes(note)));
+    setNotes(notes.filter(note => !selectedNotes.includes(note)));
     setSelectedNotes([]);
   }
 
@@ -116,12 +118,16 @@ function Display({ notes, setNotes, tempo, setTempo }) {
     setTempo(val);
   }
 
+  const waveFunctionHandler = (val) => {
+    setWaveFunction(val);
+  }
+
   useEffect(() => draw());
 
   return (
     <div className="display">
       <DisplaySettings setNewNoteLength={newNoteLengthHandler} setBeatDivision={beatDivisionHandler}
-                       setTempo={tempoHandler}></DisplaySettings>
+                       setTempo={tempoHandler} setWaveFunction={waveFunctionHandler}></DisplaySettings>
       <div className="display-canvas">
         <canvas ref={canvas} width={WIDTH} height={HEIGHT} tabIndex="0"
                 onClick={clickHandler} onKeyDown={keyDownHandler} onKeyUp={keyUpHandler}></canvas>

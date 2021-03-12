@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Generator.css';
-import { getTone } from '../../waves/sine/tones.js';
+import generateTone from '../../waves/generateTone.js';
+import * as waveFunctions from '../../waves/waveFunctions.js';
 import getWAV from '../../wav/WAVWriter.js';
 import { SAMPLES, VOLUME } from '../../constants.js';
 
@@ -14,7 +15,7 @@ function Generator({ notes, tempo }) {
       const arr = new Array(SIZE).fill(0);
       for(const note of notes) {
         const offset = note.getOffset() / (tempo/60);
-        const wave = getTone(note.getTone(), note.getLength() / (tempo/60));
+        const wave = generateTone(note.getTone(), note.getLength() / (tempo/60), waveFunctions[note.func]);
         for(let i = 0; i < wave.length; i++) {
           const arrIndex = Math.floor(SAMPLES * 2 * offset) + i;
           arr[arrIndex] += wave[i];
