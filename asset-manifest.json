@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/sound-wave-composer/static/css/main.2849d70d.chunk.css",
-    "main.js": "/sound-wave-composer/static/js/main.4352229f.chunk.js",
-    "main.js.map": "/sound-wave-composer/static/js/main.4352229f.chunk.js.map",
+    "main.css": "/sound-wave-composer/static/css/main.97d2af0b.chunk.css",
+    "main.js": "/sound-wave-composer/static/js/main.0ac0c3f5.chunk.js",
+    "main.js.map": "/sound-wave-composer/static/js/main.0ac0c3f5.chunk.js.map",
     "runtime-main.js": "/sound-wave-composer/static/js/runtime-main.69886857.js",
     "runtime-main.js.map": "/sound-wave-composer/static/js/runtime-main.69886857.js.map",
     "static/js/2.a753f846.chunk.js": "/sound-wave-composer/static/js/2.a753f846.chunk.js",
     "static/js/2.a753f846.chunk.js.map": "/sound-wave-composer/static/js/2.a753f846.chunk.js.map",
     "index.html": "/sound-wave-composer/index.html",
-    "static/css/main.2849d70d.chunk.css.map": "/sound-wave-composer/static/css/main.2849d70d.chunk.css.map",
+    "static/css/main.97d2af0b.chunk.css.map": "/sound-wave-composer/static/css/main.97d2af0b.chunk.css.map",
     "static/js/2.a753f846.chunk.js.LICENSE.txt": "/sound-wave-composer/static/js/2.a753f846.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.69886857.js",
     "static/js/2.a753f846.chunk.js",
-    "static/css/main.2849d70d.chunk.css",
-    "static/js/main.4352229f.chunk.js"
+    "static/css/main.97d2af0b.chunk.css",
+    "static/js/main.0ac0c3f5.chunk.js"
   ]
 }
