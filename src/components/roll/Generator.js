@@ -7,9 +7,15 @@ import { SAMPLES, VOLUME } from '../../constants.js';
 
 function Generator({ notes, tempo }) {
   let [waveData, setWaveData] = useState(null);
+
+  const getBeatsNum = () => {
+    const lastBeat = notes.reduce((beat, note) => Math.max(beat, note.getBeatEnd()), 0);
+    return lastBeat;
+  }
+
   const clickHandler = () => {
-    const LENGTH = 5 / (tempo/60);
-    const SIZE = SAMPLES * 4 * LENGTH;
+    const LENGTH = getBeatsNum() / (tempo/60);
+    const SIZE = Math.ceil(SAMPLES * 4 * LENGTH);
     setWaveData(0);
     setTimeout(() => {
       const arr = new Array(SIZE).fill(0);

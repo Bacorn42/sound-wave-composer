@@ -32,6 +32,10 @@ class Note {
     return this.length;
   }
 
+  getBeatEnd() {
+    return this.getOffset() + this.getLength();
+  }
+
   setLength(length) {
     this.length = length;
     this.width = PX_TO_BEAT * length;
@@ -43,6 +47,10 @@ class Note {
 
   inRect(x, y) {
     return (x >= this.getX()) && (x <= this.getX() + this.width) && (y >= this.getY()) && (y <= this.getY() + this.height);
+  }
+
+  inView(beatStart, beatEnd) {
+    return (this.getOffset() < beatEnd) || (this.getBeatEnd() > beatStart);
   }
 }
 
