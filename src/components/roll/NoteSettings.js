@@ -14,7 +14,7 @@ function NoteSettings({ notes, draw, deleteNotes }) {
     const value = e.target.value;
     setTuningOffset(value);
     for(const note of notes) {
-      note.setTuningOffset(value);
+      note.setTuningOffset(Number(value));
     }
     draw();
   }
@@ -23,7 +23,7 @@ function NoteSettings({ notes, draw, deleteNotes }) {
     const value = e.target.value;
     setLength(value);
     for(const note of notes) {
-      note.setLength(value);
+      note.setLength(Number(value));
     }
     draw();
   }
