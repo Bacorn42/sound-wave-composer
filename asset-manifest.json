@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/sound-wave-composer/static/css/main.97d2af0b.chunk.css",
-    "main.js": "/sound-wave-composer/static/js/main.0ac0c3f5.chunk.js",
-    "main.js.map": "/sound-wave-composer/static/js/main.0ac0c3f5.chunk.js.map",
+    "main.css": "/sound-wave-composer/static/css/main.120b8dc4.chunk.css",
+    "main.js": "/sound-wave-composer/static/js/main.f9ac48af.chunk.js",
+    "main.js.map": "/sound-wave-composer/static/js/main.f9ac48af.chunk.js.map",
     "runtime-main.js": "/sound-wave-composer/static/js/runtime-main.69886857.js",
     "runtime-main.js.map": "/sound-wave-composer/static/js/runtime-main.69886857.js.map",
-    "static/js/2.a753f846.chunk.js": "/sound-wave-composer/static/js/2.a753f846.chunk.js",
-    "static/js/2.a753f846.chunk.js.map": "/sound-wave-composer/static/js/2.a753f846.chunk.js.map",
+    "static/js/2.9897a02a.chunk.js": "/sound-wave-composer/static/js/2.9897a02a.chunk.js",
+    "static/js/2.9897a02a.chunk.js.map": "/sound-wave-composer/static/js/2.9897a02a.chunk.js.map",
     "index.html": "/sound-wave-composer/index.html",
-    "static/css/main.97d2af0b.chunk.css.map": "/sound-wave-composer/static/css/main.97d2af0b.chunk.css.map",
-    "static/js/2.a753f846.chunk.js.LICENSE.txt": "/sound-wave-composer/static/js/2.a753f846.chunk.js.LICENSE.txt"
+    "static/css/main.120b8dc4.chunk.css.map": "/sound-wave-composer/static/css/main.120b8dc4.chunk.css.map",
+    "static/js/2.9897a02a.chunk.js.LICENSE.txt": "/sound-wave-composer/static/js/2.9897a02a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.69886857.js",
-    "static/js/2.a753f846.chunk.js",
-    "static/css/main.97d2af0b.chunk.css",
-    "static/js/main.0ac0c3f5.chunk.js"
+    "static/js/2.9897a02a.chunk.js",
+    "static/css/main.120b8dc4.chunk.css",
+    "static/js/main.f9ac48af.chunk.js"
   ]
 }
