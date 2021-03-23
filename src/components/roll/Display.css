@@ -5,8 +5,3 @@
 .display canvas {
   border: 1px solid #000;
 }
-
-.display-canvas {
-  display: flex;
-  flex-direction: column;
-}

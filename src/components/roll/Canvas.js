@@ -3,6 +3,7 @@ import NoteSettings from './NoteSettings.js';
 import { toneNames } from '../../tones.js';
 import { PX_TO_BEAT, PX_TO_TONE } from '../../constants.js';
 import noteColors from '../../noteColors.js';
+import './Canvas.css';
 
 const TONES = toneNames.length;
 const BEATS = 5;
@@ -72,6 +73,7 @@ function Canvas({ notes, setNotes, beatDivision, makeNewNote }) {
       const offset = (beatStart % 1) * beatDivision;
       const beatDivisionWidth = PX_TO_BEAT/beatDivision;
       const x = Math.floor(beatDivisionWidth * (i - offset)) + 0.5;
+      ctx.lineWidth = (i % beatDivision === 0) ? 3 : 1;
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, HEIGHT);
@@ -203,12 +205,14 @@ function Canvas({ notes, setNotes, beatDivision, makeNewNote }) {
   useEffect(() => draw());
 
   return (
-    <div>
-      <canvas ref={canvas} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} tabIndex="0"
-        onClick={clickHandler} onKeyDown={keyDownHandler} onKeyUp={keyUpHandler}
-        onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler}>
-      </canvas>
-      <button onClick={clear}>Clear</button>
+    <div className="canvas">
+      <div className="canvas-wrapper">
+        <canvas ref={canvas} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} tabIndex="0"
+          onClick={clickHandler} onKeyDown={keyDownHandler} onKeyUp={keyUpHandler}
+          onMouseDown={mouseDownHandler} onMouseMove={mouseMoveHandler} onMouseUp={mouseUpHandler}>
+        </canvas>
+        <button onClick={clear}>Clear</button>
+      </div>
       {(selectedNotes.length > 0) && <NoteSettings notes={selectedNotes} draw={draw} deleteNotes={deleteNotes}></NoteSettings>}
     </div>
   );

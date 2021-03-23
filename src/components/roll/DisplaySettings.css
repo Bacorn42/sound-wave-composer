@@ -1,3 +1,8 @@
 .display-settings {
   border: 1px solid #000;
+  padding: 4px;
+}
+
+.display-settings input {
+  width: 50px;
 }

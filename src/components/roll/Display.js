@@ -36,9 +36,7 @@ function Display({ notes, setNotes, setTempo }) {
     <div className="display">
       <DisplaySettings setNewNoteLength={newNoteLengthHandler} setBeatDivision={beatDivisionHandler}
                        setTempo={tempoHandler} setWaveFunction={waveFunctionHandler}></DisplaySettings>
-      <div className="display-canvas">
-        <Canvas notes={notes} setNotes={setNotes} beatDivision={beatDivision} makeNewNote={makeNewNote}></Canvas>
-      </div>
+      <Canvas notes={notes} setNotes={setNotes} beatDivision={beatDivision} makeNewNote={makeNewNote}></Canvas>
     </div>
   );
 }

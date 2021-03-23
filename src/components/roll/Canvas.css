@@ -1,0 +1,9 @@
+.canvas {
+  display: flex;
+  flex-direction: row;
+}
+
+.canvas-wrapper {
+  display: flex;
+  flex-direction: column;
+}
