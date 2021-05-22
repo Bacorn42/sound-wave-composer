@@ -36,6 +36,10 @@ class Note {
     return this.getOffset() + this.getLength();
   }
 
+  getType() {
+    return this.func;
+  }
+
   setLength(length) {
     this.length = length;
     this.width = PX_TO_BEAT * length;
