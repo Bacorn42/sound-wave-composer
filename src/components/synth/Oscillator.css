@@ -1,0 +1,8 @@
+.synth-oscillator {
+  display: flex;
+  flex-direction: row;
+}
+
+.synth-oscillator input[type="range"] {
+  width: 200px;
+}
