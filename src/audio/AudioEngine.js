@@ -1,4 +1,5 @@
-import Oscillator from './Oscillator.js';
+import Patch from './Patch.js';
+import getDefaultPatch from './defaultPatches.js';
 import { PX_TO_BEAT } from '../constants.js';
 
 class AudioEngine {
@@ -8,11 +9,11 @@ class AudioEngine {
     this.volume.connect(this.ctx.destination);
     this.volume.gain.setValueAtTime(0.25, this.ctx.currentTime);
 
-    this.oscillators = [];
+    this.patches = [];
     this.interval = null;
   }
 
-  start(notes, tempo) {
+  start(notes, tempo, patches) {
     this.stop();
     const timePerPixel = (60 * 1000)/(tempo * PX_TO_BEAT);
     const sortedNotes = [...notes].sort((a,b) => a.getOffset() - b.getOffset());
@@ -26,7 +27,14 @@ class AudioEngine {
       while(current < sortedNotes.length && sortedNotes[current].getX() <= pixel) {
         const note = sortedNotes[current];
         const length = note.getLength() * PX_TO_BEAT * timePerPixel;
-        this.oscillators.push(new Oscillator(note.getType(), note.getTone(), length, this.ctx, this.volume));
+        if(['sine', 'square', 'sawtooth', 'triangle'].includes(note.getType())) {
+          const patch = getDefaultPatch(note.getType());
+          this.patches.push(new Patch(patch, note.getTone(), length, this.ctx, this.volume));
+        }
+        else {
+          const patch = patches.find(patch => patch.getName() === note.getType());
+          this.patches.push(new Patch(patch, note.getTone(), length, this.ctx, this.volume));
+        }
         current++;
       }
       if(pixel >= lastNote) {
@@ -36,8 +44,8 @@ class AudioEngine {
   }
 
   stop() {
-    this.oscillators.forEach(osc => osc.stop());
-    this.oscillators = [];
+    this.patches.forEach(patch => patch.stop());
+    this.patches = [];
     clearInterval(this.interval);
   }
 }

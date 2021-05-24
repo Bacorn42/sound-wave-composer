@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import Patch from './Patch.js';
-import PatchModel from '../../models/synth/patch.js';
 import './PatchContainer.css';
 
-function PatchContainer() {
-  const [patches, setPatches] = useState([]);
+function PatchContainer({ patches, setPatch, newPatch }) {
   const [currentPatch, setCurrentPatch] = useState(-1);
 
-  const newPatch = () => {
+  const createNewPatch = () => {
     setCurrentPatch(patches.length);
-    setPatches([...patches, new PatchModel()]);
+    newPatch();
   }
 
   const handlePatchSelect = (e) => {
@@ -17,18 +15,11 @@ function PatchContainer() {
     setCurrentPatch(val);
   }
 
-  const setPatch = (patch) => {
-    const newPatches = [...patches];
-    newPatches[currentPatch] = patch;
-    setPatches(newPatches);
-  }
-
   const getPatch = () => {
     if(currentPatch >= 0) {
       const patch = patches[currentPatch];
-      const patchId = patch.name + currentPatch;
       return (
-        <Patch patch={patches[currentPatch]} setPatch={setPatch} patchId={patchId}></Patch>
+        <Patch patch={patch} setPatch={setPatch} patchId={patch.getId()}></Patch>
       );
     }
   }
@@ -39,7 +30,7 @@ function PatchContainer() {
         <select onChange={handlePatchSelect} value={currentPatch}>
           {patches.map((patch, index) => <option value={index} key={index}>{patch.name}</option>)}
         </select>
-        <button onClick={newPatch}>+</button>
+        <button onClick={createNewPatch}>+</button>
       </div>
       <div className="synth-patch-container-editor">
         {getPatch()}

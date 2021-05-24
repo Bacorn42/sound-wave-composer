@@ -16,6 +16,18 @@ class Oscillator {
   setFineTune(fineTune) {
     this.fineTune = fineTune;
   }
+
+  getWaveType() {
+    return this.waveType;
+  }
+
+  getTune() {
+    return this.tune;
+  }
+
+  getFineTune() {
+    return this.fineTune;
+  }
 }
 
 export default Oscillator;

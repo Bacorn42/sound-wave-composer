@@ -1,9 +1,13 @@
 import Oscillator from "./oscillator.js";
 
 class Patch {
+  static currentId = 0;
+
   constructor() {
     this.name = 'Patch';
+    this.id = Patch.currentId;
     this.oscillators = [];
+    Patch.currentId++;
   }
 
   newOscillator() {
@@ -17,6 +21,18 @@ class Patch {
 
   setOscillators(oscillators) {
     this.oscillators = oscillators;
+  }
+
+  getName() {
+    return this.name;
+  }
+
+  getId() {
+    return this.name + '_' + this.id;
+  }
+
+  getOscillators() {
+    return this.oscillators;
   }
 }
 

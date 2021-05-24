@@ -4,7 +4,7 @@ import Canvas from './Canvas.js';
 import DisplaySettings from './DisplaySettings.js';
 import Note from '../../Note.js';
 
-function Display({ notes, setNotes, setTempo }) {
+function Display({ notes, setNotes, setTempo, patches }) {
   const [newNoteLength, setNewNoteLength] = useState(1);
   const [beatDivision, setBeatDivision] = useState(4);
   const [waveFunction, setWaveFunction] = useState('sine');
@@ -35,7 +35,7 @@ function Display({ notes, setNotes, setTempo }) {
   return (
     <div className="display">
       <DisplaySettings setNewNoteLength={newNoteLengthHandler} setBeatDivision={beatDivisionHandler}
-                       setTempo={tempoHandler} setWaveFunction={waveFunctionHandler}></DisplaySettings>
+                       setTempo={tempoHandler} setWaveFunction={waveFunctionHandler} patches={patches}></DisplaySettings>
       <Canvas notes={notes} setNotes={setNotes} beatDivision={beatDivision} makeNewNote={makeNewNote}></Canvas>
     </div>
   );

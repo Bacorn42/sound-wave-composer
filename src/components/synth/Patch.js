@@ -23,7 +23,7 @@ function Patch({ patch, setPatch, patchId }) {
 
   return (
     <div className="synth-patch">
-      Patch name: <input value={patch.name} onChange={handleName}></input>
+      Patch name: <input value={patch.getName()} onChange={handleName}></input>
       <OscillatorContainer oscillators={patch.oscillators} newOscillator={newOscillator} setOscillator={setOscillator} patchId={patchId}></OscillatorContainer>
     </div>
   );

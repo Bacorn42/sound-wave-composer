@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import Display from './Display.js';
-import Generator from './Generator.js';
 import AudioEngine from '../../audio/AudioEngine.js';
 
-function Roll() {
+function Roll({ patches }) {
   const [notes, setNotes] = useState([]);
   const [tempo, setTempo] = useState(60);
-  const engine = new AudioEngine();
+  const [engine] = useState(new AudioEngine());
 
   const play = () => {
-    engine.start(notes, tempo);
+    engine.start(notes, tempo, patches);
+  }
+
+  const stop = () => {
+    engine.stop();
   }
 
   return (
     <div>
-      <Display notes={notes} setNotes={setNotes} tempo={tempo} setTempo={setTempo}></Display>
-      <Generator notes={notes} tempo={tempo}></Generator>
+      <Display notes={notes} setNotes={setNotes} tempo={tempo} setTempo={setTempo} patches={patches}></Display>
       <button onClick={play}>Play</button>
+      <button onClick={stop}>Stop</button>
     </div>
   );
 }

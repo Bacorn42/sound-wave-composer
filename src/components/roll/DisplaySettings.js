@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as waveFunctions from '../../waves/waveFunctions.js';
 import './DisplaySettings.css';
 
-function DisplaySettings({ setNewNoteLength, setBeatDivision, setTempo, setWaveFunction }) {
+function DisplaySettings({ setNewNoteLength, setBeatDivision, setTempo, setWaveFunction, patches }) {
   const [noteLength, setNoteLength] = useState(1);
   const [beats, setBeats] = useState(4);
   const [bpm, setBpm] = useState(60);
@@ -32,13 +32,17 @@ function DisplaySettings({ setNewNoteLength, setBeatDivision, setTempo, setWaveF
     setWaveFunction(val);
   }
 
+  const getWaves = () => {
+    return [...Object.keys(waveFunctions), ...patches.map(patch => patch.getName())];
+  }
+
   return (
     <div className="display-settings">
       New note length <input value={noteLength} onChange={noteLengthHandler}></input>beats.<br />
       Beat division <input value={beats} onChange={beatsHandler}></input>.<br />
       Tempo <input value={bpm} onChange={bpmHandler}></input>bpm.<br />
       Wave <select value={func} onChange={waveHandler}>
-        {Object.keys(waveFunctions).map(x => <option value={x} key={x}>{x}</option>)}
+        {getWaves().map(x => <option value={x} key={x}>{x}</option>)}
       </select>
     </div>
   );
